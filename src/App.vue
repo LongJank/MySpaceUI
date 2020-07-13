@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="test"/>
+<!--    <img alt="Vue logo" src="./assets/logo.png">-->
+    <Index messgae="这是主页"/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+ import Index from './components/index/index'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+      Index
   }
 }
 </script>
