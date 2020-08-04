@@ -11,6 +11,7 @@
     </div>
 </template>
 <script>
+import axios from "axios";
   export default {
     data() {
       return {
@@ -21,7 +22,18 @@
     },
     methods: {
       onSubmit() {
-        console.log('submit!');
+        let url = "http://192.168.1.3:8989/type/addType";
+        axios.post(url,{
+          typeName:this.form.name
+        })
+        .then((response) => {
+          if (response.data.errorCode == 200){
+            this.$message.success('添加成功')
+            this.form.name = ''
+          }else {
+            this.$message.error(response.data.message)
+          }
+        });
       }
     }
   }
