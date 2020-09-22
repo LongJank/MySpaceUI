@@ -33,7 +33,7 @@
       }
     },
     mounted(){
-        let url = "http://192.168.1.3:8989/type/getTypeList";
+        let url = "http://localhost:8999/type/getTypeList";
         console.log(url)
         axios.get(url).then((reponse) =>{
           this.typeList = reponse.data.result
@@ -44,7 +44,7 @@
         this.form.region = e
       },
       onSubmit() {
-        let url = "http://192.168.1.3:8989/question/addQuestion";
+        let url = "http://localhost:8999/question/addQuestion";
         axios.post(url,{
           questionName:this.form.name,
           answer:this.form.desc,

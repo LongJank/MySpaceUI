@@ -22,7 +22,7 @@ import axios from "axios";
     },
     methods: {
       onSubmit() {
-        let url = "http://192.168.1.3:8989/type/addType";
+        let url = "http://localhost:8999/type/addType";
         axios.post(url,{
           typeName:this.form.name
         })
