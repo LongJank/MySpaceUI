@@ -3,7 +3,7 @@
         <el-aside :width="isCollapse ? '70px' : '200px'" class="ysl-leftBar">
             <div class="ysl-logo">{{isCollapse ? 'Long' : 'LongYsuai的小作坊'}}</div>
             <el-menu class="ysl-menu" router :collapse="isCollapse">
-                <el-menu-item index="/">
+                <el-menu-item index="/home">
                     <i class="el-icon-user"></i>
                     <span slot="title">账号中心</span>
                 </el-menu-item>
