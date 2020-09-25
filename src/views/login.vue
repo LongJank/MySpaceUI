@@ -1,5 +1,7 @@
 <template>
   <div class="ysl-home">
+    <div class="homeBox">
+    <div class="long-img"></div>
     <div class="long-home">
       <div class = "login-title">登录账号</div>
       <div class="login">
@@ -14,6 +16,8 @@
         </el-input>
         <el-button @click="goHome" type="primary" style="width:80%;margin-top:30px">登录</el-button>
       </div>
+    
+    </div>
     </div>
   </div>
 </template>
@@ -37,17 +41,30 @@ export default {
 .ysl-home {
   width: 100%;
   height: 100%;
+  padding-top: 10%;
+  text-align: center;
+}
+.homeBox{
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: flex-start;
+  margin: 0 auto;
+}
+.long-img{
+  width: 50%;
+  height: 350px;
+  background: url('../assets/loginImg.jpeg') no-repeat;
+  background-size: 100% 100%;
 }
 .long-home {
   background: #ffffff;
   box-shadow: 0px 2px 16px 0px rgba(0, 86, 144, 0.12);
   border-radius: 4px;
   text-align: center;
-  width: 400px;
-  height: 380px;
-  margin: 0 auto;
-  margin-top: 200px;
-  padding-top: 3%;
+  width: 50%;
+  height: 350px;
+  padding-top: 40px;
 }
 .login {
   margin-top: 30px;

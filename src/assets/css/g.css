@@ -11,7 +11,7 @@ ul {
 input {
     outline: none;
 }
-body {
+html, body, #app {
     height: 100%;
     background-color: #f1f2f6;
 }
