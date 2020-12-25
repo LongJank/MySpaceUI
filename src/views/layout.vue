@@ -19,6 +19,18 @@
                     <i class="el-icon-setting"></i>
                     <span slot="title">其他设置</span>
                 </el-menu-item>
+                <el-menu-item index="/video">
+                    <i class="el-icon-video-camera"></i>
+                    <span slot="title">我的视频</span>
+                </el-menu-item>
+                <el-menu-item index="/videoAll">
+                    <i class="el-icon-video-camera"></i>
+                    <span slot="title">所有视频</span>
+                </el-menu-item>
+                <el-menu-item index="/uploadVideo">
+                    <i class="el-icon-upload"></i>
+                    <span slot="title">上传视频</span>
+                </el-menu-item>
             </el-menu>
         </el-aside>
         <el-container>
