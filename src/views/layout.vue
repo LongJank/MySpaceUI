@@ -31,6 +31,9 @@
                     <i class="el-icon-upload"></i>
                     <span slot="title">上传视频</span>
                 </el-menu-item>
+                <el-menu-item index="/dacang">
+                    <span slot="title">测试监控</span>
+                </el-menu-item>
             </el-menu>
         </el-aside>
         <el-container>

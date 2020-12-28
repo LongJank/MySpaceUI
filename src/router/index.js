@@ -90,6 +90,17 @@ export default new VueRouter({
           component: () => import('@/views/upload.vue')
         }
       ]
+    },
+    {
+      path: '/dacang',
+      component: Layout,
+      redirect: '/dacang/jiankong',
+      children: [
+        {
+          path: 'jiankong',
+          component: () => import('@/views/dacang.vue')
+        }
+      ]
     }
   ]
 })
