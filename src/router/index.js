@@ -9,6 +9,8 @@ import 'video.js/dist/video-js.css'
 Vue.use(VueRouter)
 Vue.use(VideoPlayer)
 export default new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
   routes: [
     {
       path: '/',
