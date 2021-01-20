@@ -21,7 +21,7 @@
 </template>
 <script>
   import axios from "axios";
-
+  import api from "../router/api.js";
   export default {
     data() {
       return {
@@ -34,7 +34,7 @@
       }
     },
     mounted() {
-      let url = "http://47.103.207.175:8686/type/getTypeList";
+      let url = api.API + "/type/getTypeList";
       console.log(url)
       axios.get(url).then((reponse) => {
         this.typeList = reponse.data.result
@@ -45,7 +45,7 @@
         this.form.region = e
       },
       onSubmit() {
-        let url = "http://47.103.207.175:8686/question/addQuestion";
+        let url = api.API + "/question/addQuestion";
         axios.post(url, {
             questionName: this.form.name,
             answer: this.form.desc,
@@ -66,9 +66,6 @@
   }
 </script>
 <style scoped>
-  /* .ysl-questionForm  .el-form-item{
-    width: 50%;
-} */
   .ysl-questionForm .el-input,
   .el-select,
   .el-textarea {
