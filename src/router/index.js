@@ -94,13 +94,13 @@ export default new VueRouter({
       ]
     },
     {
-      path: '/dacang',
+      path: '/user',
       component: Layout,
-      redirect: '/dacang/jiankong',
+      redirect: '/user/alluser',
       children: [
         {
-          path: 'jiankong',
-          component: () => import('@/views/dacang.vue')
+          path: 'alluser',
+          component: () => import('@/views/user.vue')
         }
       ]
     }
