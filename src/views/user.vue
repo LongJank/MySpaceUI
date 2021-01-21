@@ -67,12 +67,15 @@
             }
         },
         mounted() {
-            let url = api.API + "/user/getUserList"
-            axios.get(url).then((reponse) => {
-                this.tableData = reponse.data.result
-            })
+            this.getTableDate()
         },
         methods: {
+            getTableDate() {
+                let url = api.API + "/user/getUserList"
+                axios.get(url).then((reponse) => {
+                    this.tableData = reponse.data.result
+                })
+            },
             lookPassword(row) {
                 console.log(row);
             },
@@ -86,6 +89,7 @@
                 }).then((response) => {
                     if (response.data.errorCode == 200) {
                         this.$message.success('修改成功')
+                        this.getTableDate()
                     } else {
                         this.$message.error(response.data.message)
                     }
