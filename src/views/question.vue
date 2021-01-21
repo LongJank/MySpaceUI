@@ -35,7 +35,6 @@
     },
     mounted() {
       let url = api.API + "/type/getTypeList";
-      console.log(url)
       axios.get(url).then((reponse) => {
         this.typeList = reponse.data.result
       })
