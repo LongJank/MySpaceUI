@@ -19,13 +19,13 @@
                     <i class="el-icon-setting"></i>
                     <span slot="title">其他设置</span>
                 </el-menu-item>
-                <el-menu-item index="/video">
-                    <i class="el-icon-video-camera"></i>
-                    <span slot="title">我的视频</span>
+                <el-menu-item index="/java">
+                    <i class="el-icon-hot-water"></i>
+                    <span slot="title">JAVA</span>
                 </el-menu-item>
-                <el-menu-item index="/videoAll">
+                <el-menu-item index="/python">
                     <i class="el-icon-video-camera"></i>
-                    <span slot="title">所有视频</span>
+                    <span slot="title">PYTHON</span>
                 </el-menu-item>
                 <el-menu-item index="/uploadVideo">
                     <i class="el-icon-upload"></i>

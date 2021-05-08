@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/views/layout'
-import Login from '@/views/login'
+// import Login from '@/views/login'
 import VideoPlayer from 'vue-video-player'
 import 'vue-video-player/src/custom-theme.css'
 import 'video.js/dist/video-js.css'
@@ -14,7 +14,14 @@ export default new VueRouter({
   routes: [
     {
       path: '/',
-      component: Login,
+      component: Layout,
+      redirect: '/home/welcome',
+      children: [
+        {
+          path: 'welcome', //欢迎页
+          component: () => import('@/views/home.vue'),
+        }
+      ],
     },
     {
       path: '/home', //后台默认主页面
@@ -61,20 +68,20 @@ export default new VueRouter({
       ],
     },
     {
-      path: '/video',
+      path: '/java',
       component: Layout,
-      redirect: '/video/videoList',
+      redirect: '/java/list',
       children: [
         {
-          path: 'videoList',
-          component: () => import('@/views/video.vue')
+          path: 'list',
+          component: () => import('@/views/java.vue')
         }
       ]
     },
     {
-      path: '/videoAll',
+      path: '/python',
       component: Layout,
-      redirect: '/videoAll/list',
+      redirect: '/python/list',
       children: [
         {
           path: 'list',
