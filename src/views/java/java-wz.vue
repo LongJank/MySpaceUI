@@ -1,12 +1,9 @@
 <template>
   <el-row :gutter="12">
-    <el-col :span="6" v-for="o in list" :key="o">
-      <el-card class="box-card" shadow="hover" @click.native = "checkDetails(o.id)">
-        <div slot="header" class="clearfix">
-          <span>{{ o.style }}</span>
-        </div>
-        <div class="text item">
-          {{ o.detailed }}
+    <el-col :span="3" v-for="item in list" :key="item.id">
+      <el-card class="box-card" shadow="hover" @click.native = "checkDetails(item.id)">
+        <div class="clearfix">
+          <span>{{ item.style }}</span>
         </div>
       </el-card>
     </el-col>
@@ -14,20 +11,15 @@
 </template>
 
 <style>
-.text {
-  font-size: 14px;
-}
-
 .box-card {
-  width: 400px;
-  height: 300px;
+  width: 200px;
   margin-bottom: 10px;
 }
 </style>
 
 <script>
 import axios from "axios";
-import api from "../router/api.js";
+import api from "../../router/api.js";
 
 export default {
   data() {
