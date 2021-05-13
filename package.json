@@ -25,6 +25,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "github-markdown-css": "^4.0.0",
     "highlight.js": "^10.7.2",
+    "mavon-editor": "^2.9.1",
     "node-sass": "^6.0.0",
     "sass-loader": "^11.0.1",
     "vue-markdown-loader": "^2.4.1",

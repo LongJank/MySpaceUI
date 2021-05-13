@@ -1,3 +1,5 @@
 <template>
-  <div>白银</div>
+  <div class="yslg-contentMain">
+    啦啦啦啦
+  </div>
 </template>
