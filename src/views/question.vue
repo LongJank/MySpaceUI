@@ -72,7 +72,6 @@ export default {
       this.form.type = e
     },
     onSubmit() {
-      console.log(this.form.content)
       let url = api.API + "/articles/create";
       axios.post(url, {
         type: this.form.type,
