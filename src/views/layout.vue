@@ -31,6 +31,20 @@
           <i class="el-icon-user"></i>
           <span slot="title">用户中心</span>
         </el-menu-item>
+        <el-submenu index="/article">
+          <template slot="title">
+            <i class="el-icon-document"></i>
+            <span>文章管理</span>
+          </template>
+          <el-menu-item index="/article/add">
+            <i class="el-icon-document"></i>
+            <span slot="title">新增文章</span>
+          </el-menu-item>
+          <el-menu-item index="/article/list">
+            <i class="el-icon-document"></i>
+            <span slot="title">文章列表</span>
+          </el-menu-item>
+        </el-submenu>
         <el-submenu index="/java">
           <template slot="title">
             <i class="el-icon-hot-water"></i>

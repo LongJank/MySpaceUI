@@ -66,6 +66,18 @@ export default new VueRouter({
                     component: () => import('@/views/setting.vue')
                 }
             ],
+        }, {
+            path: '/article',
+            component: Layout,
+            children: [
+                {
+                    path: 'add',
+                    component: () => import('@/views/article/articleAdd.vue')
+                },
+                {
+                    path: 'list',
+                    component: () => import('@/views/article/articleList.vue')
+                }]
         },
         {
             path: '/java',
