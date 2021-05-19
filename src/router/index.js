@@ -72,11 +72,11 @@ export default new VueRouter({
             children: [
                 {
                     path: 'add',
-                    component: () => import('@/views/article/articleAdd.vue')
+                    component: () => import('@/views/article/article-add.vue')
                 },
                 {
                     path: 'list',
-                    component: () => import('@/views/article/articleList.vue')
+                    component: () => import('@/views/article/article-list.vue')
                 }]
         },
         {
