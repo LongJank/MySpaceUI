@@ -76,7 +76,7 @@ export default new VueRouter({
                 },
                 {
                     path: 'list',
-                    component: () => import('@/views/article/article-list.vue')
+                    component: () => import('@/views/article/article-newlist.vue')
                 }]
         },
         {
