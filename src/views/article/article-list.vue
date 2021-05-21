@@ -1,138 +1,173 @@
 <template>
   <div class="yslg-contentMain">
-    <div class="infinite-list leftContent">
-      <ul class="list"
-          v-infinite-scroll="load"
-          infinite-scroll-disabled="disabled">
-        <li v-for="item in articlesList" class="liList" v-bind:key="item.id" @click="liClick(item)">
-          <el-row>
-            <el-col :span="20"><div class="header">
-              {{ item.title.length > 20 ? item.title.slice(0, 20) + "..." : item.title }}
-            </div></el-col>
-            <el-col :span="4"><el-button type="danger" icon="el-icon-delete" circle></el-button></el-col>
-          </el-row>
-          <div class="mid">
-            <el-row>
-              <el-col :span="8">{{ item.type }}</el-col>
-              <el-col :span="8">{{ item.author }}</el-col>
-              <el-col :span="8">{{ item.createTime }}</el-col>
-            </el-row>
-          </div>
-        </li>
-      </ul>
-      <p v-if="loading">加载中...</p>
-      <p v-if="noMore">没有更多了</p>
+    <div class="header">
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="作者：">
+          <el-input size="small" v-model="formInline.user" placeholder="作者"></el-input>
+        </el-form-item>
+        <el-form-item label="类型：">
+          <el-select size="small" v-model="formInline.type" placeholder="请选择类型" @change="changeValue">
+            <el-option key="" label="所有" value=""></el-option>
+            <el-option v-for="item in typeList" :key="item.id" :label="item.typeName" :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="状态">
+          <el-select size="small" v-model="formInline.status" placeholder="请选择状态" @change="changeStatus">
+            <el-option v-for="item in statusList" :key="item.id" :label="item.status" :value="item.id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-button size="small" type="primary" @click="onSubmit">查询</el-button>
+        </el-form-item>
+      </el-form>
     </div>
-    <div class="rightContent">
-      <h2>{{ this.right.title }}</h2>
-      <div v-html="this.right.content" class="markdown-body"></div>
+    <div class="tableClass">
+      <el-table :data="tableData" style="width: 100%" height="90%">
+        <el-table-column prop="type" label="类型" min-width="100" />
+        <el-table-column prop="author" label="作者" min-width="100" />
+        <el-table-column prop="title" label="标题" min-width="600" />
+        <el-table-column prop="status" label="状态">
+          <template slot-scope="scope">
+            <p v-if="scope.row.status === 0">正常</p>
+            <p v-if="scope.row.status === 1">删除</p>
+          </template>
+        </el-table-column>
+        <el-table-column prop="createTime" label="创建时间" />
+        <el-table-column fixed="right" label="操作" width="130">
+          <template slot-scope="scope">
+            <el-button size="mini" type="success" icon="el-icon-reading" circle v-if="scope.row.status === 0"
+              @click="view(scope.row.id)"></el-button>
+            <el-button size="mini" type="primary" icon="el-icon-edit-outline" circle v-if="scope.row.status === 1"
+              @click="edit(scope.row.id)"></el-button>
+            <el-button size="mini" type="danger" icon="el-icon-delete" circle v-if="scope.row.status === 0"
+              @click="deleteOrRestoreArticle(scope.row)"></el-button>
+            <el-button size="mini" type="warning" icon="el-icon-refresh-right" circle v-if="scope.row.status === 1"
+              @click="deleteOrRestoreArticle(scope.row)"></el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div class="block">
+        <el-pagination background @size-change="handleSizeChange" @current-change="handleCurrentChange"
+          :page-sizes="[10, 20, 50, 100]" :page-size="10" layout="total, sizes, prev, pager, next, jumper"
+          :total=this.total>
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios";
-import api from "../../router/api.js";
-import marked from 'marked';
-import 'github-markdown-css'
+  import axios from "axios";
+  import api from "../../router/api.js";
 
-export default {
-  data() {
-    return {
-      count: 10,
-      loading: false,
-      articlesList: [],
-      pageNo: 1,
-      pageSize: 10,
-      total: '',
-      right: {
-        title: '',
-        content: '',
-        picUrl: ''
-      }
-    }
-  },
-  computed: {
-    noMore() {
-      return this.pageSize >= this.total
-    },
-    disabled() {
-      return this.loading || this.noMore
-    }
-  },
-  mounted() {
-    this.getArticles()
-  },
-  methods: {
-    getArticles() {
-      let url = api.API + "/articles/getList";
-      axios.post(url, {
-        pageNo: this.pageNo,
-        pageSize: this.pageSize
-      }).then((response) => {
-        if (response.data.code === 200) {
-          this.articlesList = response.data.result.list
-          this.total = response.data.result.total
-        } else {
-          this.$message.error(response.data.message)
+  export default {
+    name: "article-newlist",
+    data() {
+      return {
+        tableData: [],
+        total: 0,
+        typeList: [],
+        statusList: [{
+          status: "所有"
+        }, {
+          id: 0,
+          status: "正常"
+        }, {
+          id: 1,
+          status: "删除"
+        }],
+        formInline: {
+          user: '',
+          type: '',
+          status: ''
         }
-      })
+      }
     },
-    load() {
-      this.loading = true
-      setTimeout(() => {
-        this.pageSize += 2
-        this.getArticles();
-        this.loading = false
-      }, 1000)
+    mounted() {
+      this.getArticles()
+      this.getTypeList()
     },
-    liClick(item) {
-      this.right.title = item.title
-      this.right.content = marked(item.content)
-      this.right.picUrl = item.picUrl
-    }
+    methods: {
+      getTypeList() {
+        let url = api.API + "/type/getList";
+        axios.get(url).then((response) => {
+          this.typeList = response.data.result
+        })
+      },
+      onSubmit() {
+        this.getArticles()
+      },
+      getArticles() {
+        let url = api.API + "/articles/getList";
+        axios.post(url, {
+          pageNo: this.pageNo,
+          pageSize: this.pageSize,
+          user: this.formInline.user,
+          type: this.formInline.type,
+          status: this.formInline.status
+        }).then((response) => {
+          if (response.data.code === 200) {
+            this.tableData = response.data.result.list
+            this.total = response.data.result.total
+          } else {
+            this.$message.error(response.data.message)
+          }
+        })
+      },
+      handleSizeChange(val) {
+        this.pageSize = val
+        this.getArticles()
+      },
+      handleCurrentChange(val) {
+        this.pageNo = val
+        this.getArticles()
+      },
+      changeValue(e) {
+        this.formInline.type = e
+      },
+      changeStatus(e) {
+        this.formInline.status = e
+      },
+      view(id) {
+        console.log(id)
+        this.$router.push({
+          path: '/article/view',
+          query: {
+            id: id
+          }
+        })
+      },
+      edit(id) {
+        console.log(id)
+      },
+      deleteOrRestoreArticle(row) {
+        let status = row.status === 0 ? 1 : 0;
+        let url = api.API + "/articles/deleteOrRestore/" + row.id + "/" + status;
+        axios.get(url).then((response) => {
+          if (response.data.code === 200) {
+            this.$message.success("操作成功")
+          } else {
+            this.$message.error(response.data.message)
+          }
+        })
+        this.getArticles()
+      }
+    },
   }
-}
 </script>
 
 <style scoped>
-.leftContent {
-  float: left;
-  width: 28.2%;
-  height: 99%;
-  overflow-y: scroll;
-}
+  .header {
+    height: 10%;
+  }
 
-.leftContent::-webkit-scrollbar, .rightContent::-webkit-scrollbar {
-  display: none; /*隐藏滚动条*/
-}
+  .tableClass {
+    height: 90%;
+  }
 
-.liList {
-  width: 100%;
-  height: 80px;
-  border-top: 1px solid #f4f4f4;
-  border-bottom: 1px solid #f4f4f4;
-  margin: 0 0 -1px -1px;
-  position: relative;
-  z-index: 0;
-  padding-top: 15px;
-}
-
-.header:hover {
-  color: #0099ff;
-}
-
-.mid {
-  margin-top: 10px;
-  font-size: 12px;
-  color: #C2C2C2;
-}
-
-.rightContent {
-  float: right;
-  width: 71.8%;
-  height: 99%;
-  overflow-y: scroll;
-  padding: 10px;
-}
+  .tableClass .block {
+    height: 5%;
+  }
 </style>
