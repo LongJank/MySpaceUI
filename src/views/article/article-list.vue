@@ -131,7 +131,6 @@
         this.formInline.status = e
       },
       view(id) {
-        console.log(id)
         this.$router.push({
           path: '/article/view',
           query: {
