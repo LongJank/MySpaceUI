@@ -2,18 +2,20 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/views/layout'
 import Login from '@/views/login'
-import VideoPlayer from 'vue-video-player'
 import 'vue-video-player/src/custom-theme.css'
 import 'video.js/dist/video-js.css'
 
 Vue.use(VueRouter)
-Vue.use(VideoPlayer)
-export default new VueRouter({
+const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [
         {
             path: '/',
+            redirect: '/login'
+        },
+        {
+            path: '/login',
             component: Login,
         },
         {
@@ -84,7 +86,7 @@ export default new VueRouter({
                 },
                 {
                     path: 'view',
-                    component: () => import('@/views/article/article-view.vue')       
+                    component: () => import('@/views/article/article-view.vue')
                 }]
         },
         {
@@ -156,3 +158,23 @@ export default new VueRouter({
         }
     ]
 })
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(m => m.meta.requireAuth)) {    // 需要登录
+        if(window.localStorage.token && window.localStorage.isLogin === '1'){
+            next()
+        } else if (to.path !== '/login') {
+            let token = window.localStorage.token;
+            if (token === 'null' || token === '' || token === undefined){
+                next({path: '/login'})
+                this.$message.warning('检测到您还未登录,请登录后操作！')
+            }
+        } else {
+            next()
+        }
+    } else {   // 不需要登录
+        next()
+    }
+})
+
+export default router

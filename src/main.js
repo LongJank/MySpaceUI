@@ -13,6 +13,12 @@ Vue.config.productionTip = false
 Vue.use(ElementUI)
 Vue.use(mditor)
 Vue.prototype.axios = axios
+//请求在到达服务器之前，先会调用use中的这个回调函数来添加请求头信息
+axios.interceptors.request.use(config => {
+  //为请求头对象，添加token验证的Authorization字段
+  config.headers.token = window.localStorage.getItem("token")
+  return config
+})
 new Vue({
   router,
   render: h => h(App),
