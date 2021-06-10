@@ -161,7 +161,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(m => m.meta.requireAuth)) {    // 需要登录
-        if(window.localStorage.token && window.localStorage.isLogin === '1'){
+        if(window.localStorage.token){
             next()
         } else if (to.path !== '/login') {
             let token = window.localStorage.token;
