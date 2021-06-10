@@ -1,17 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/views/layout'
-// import Login from '@/views/login'
-import VideoPlayer from 'vue-video-player'
+import Login from '@/views/login'
 import 'vue-video-player/src/custom-theme.css'
 import 'video.js/dist/video-js.css'
 
 Vue.use(VueRouter)
-Vue.use(VideoPlayer)
 export default new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [
+        {
+            path: '/',
+            redirect: '/login'
+        },
+        {
+            path: '/login',
+            component: Login,
+        },
         {
             path: '/',
             component: Layout,
