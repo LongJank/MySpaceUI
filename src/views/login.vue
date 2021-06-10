@@ -35,12 +35,12 @@
         if (this.username == "" || this.password == "") {
           this.$message.error("请输入用户名或密码！")
         } else {
-          let url = api.API + "/login/loginByUserName";
+          let url = api.API + "/admin/login";
           axios.post(url, {
             userName: this.username,
             password: this.password
           }).then((response) => {
-            if (response.data.errorCode == 200) {
+            if (response.data.code == 200) {
               this.$message.success('登陆成功！')
               this.$router.push("/home");
             } else {

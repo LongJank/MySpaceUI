@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Layout from '@/views/layout'
-// import Login from '@/views/login'
+import Login from '@/views/login'
 import VideoPlayer from 'vue-video-player'
 import 'vue-video-player/src/custom-theme.css'
 import 'video.js/dist/video-js.css'
@@ -12,6 +12,10 @@ export default new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes: [
+        {
+            path: '/',
+            component: Login,
+        },
         {
             path: '/',
             component: Layout,
