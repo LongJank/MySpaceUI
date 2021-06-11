@@ -43,7 +43,7 @@
             if (response.data.code === 200) {
               var tokenHead = response.data.result.tokenHead;
               var token = response.data.result.token;
-              window.localStorage.setItem("token", tokenHead + token);
+              this.$store.commit("$_setToken",tokenHead + token)
               this.$message.success('登陆成功！')
               this.$router.push("/home");
             } else {
